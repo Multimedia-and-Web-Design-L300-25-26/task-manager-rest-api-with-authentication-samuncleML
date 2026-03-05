@@ -1,6 +1,19 @@
 import express from "express";
+import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
+import { connectDB } from "./config/db.js";
+
+// load environment variables early
+dotenv.config();
+
+// provide defaults for tests or missing values
+if (!process.env.JWT_SECRET) {
+  process.env.JWT_SECRET = "secretkey";
+}
+
+// connect to database immediately; tests will hit this
+connectDB();
 
 const app = express();
 
